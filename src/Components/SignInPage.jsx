@@ -3,6 +3,7 @@ import Nav from "./Nav";
 import SignInImage from "/SignIn.jpg";
 import PinLogo from "/pin-logo.png";
 import {CiWarning} from "react-icons/ci";
+import {Link} from "react-router-dom";
 
 export default function SignInPage({supabase}) {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ export default function SignInPage({supabase}) {
         </div>
 
         {/* Right Side */}
-        <div className="w-full flex flex-col justify-center items-center p-8">
+        <div className="w-full bg-gray-100 flex flex-col justify-center items-center p-8">
           <div className="h-full w-1/2 py-10 border-2 shadow-lg bg-white rounded-2xl">
             <div className="flex justify-center items-center mb-5">
               <img src={PinLogo} className="w-16 h-16" />
@@ -54,7 +55,7 @@ export default function SignInPage({supabase}) {
                 SignInUser();
               }}
             >
-              <div className="flex flex-col gap-8 justify-center items-center">
+              <div className="flex flex-col  gap-8 justify-center items-center">
                 <div className="w-full flex flex-col gap-2 justify-center px-4">
                   <label
                     className=" text-sm font-medium leading-none"
@@ -100,7 +101,10 @@ export default function SignInPage({supabase}) {
                   </button>
                   <p className="text-sm tracking-tight font-medium mt-2 flex justify-end">
                     Don&apos;t have an account? &nbsp;
-                    <span className="font-semibold"> Sign up</span>
+                    <Link to={"/signup"} className="font-semibold">
+                      {" "}
+                      Sign up
+                    </Link>
                   </p>
                   {error ? (
                     <p className="bg-red-200 flex justify-center items-center rounded-md py-1 mt-2 text-red-500 text-medium gap-2 font-semibold">

@@ -3,6 +3,7 @@ import SignUpImage from "/SignUp.jpg";
 import PinLogo from "/pin-logo.png";
 import {CiWarning} from "react-icons/ci";
 import Nav from "./Nav";
+import {Link} from "react-router-dom";
 
 function SignUpPage({supabase}) {
   const [email, setEmail] = useState("");
@@ -104,7 +105,10 @@ function SignUpPage({supabase}) {
                   </button>
                   <p className="text-sm tracking-tight font-medium mt-2 flex justify-end">
                     Already have an account? &nbsp;
-                    <span className="font-semibold"> Sign in</span>
+                    <Link to={"/signin"} className="font-semibold">
+                      {" "}
+                      Sign in
+                    </Link>
                   </p>
                   {error ? (
                     <p className="bg-red-200 flex justify-center items-center rounded-md py-1 mt-2 text-red-500 text-medium gap-2 font-semibold">

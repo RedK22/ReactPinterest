@@ -1,10 +1,11 @@
 import PinLogo from "/pin-logo.png";
 import {HiSearch} from "react-icons/hi";
 import {FaUserCircle} from "react-icons/fa";
+import {Link} from "react-router-dom";
 
 function Nav() {
   return (
-    <div className="w-full h-16 bg-white px-4 py-6 flex border-b-2 shadow-md gap-5 items-center justify-center ">
+    <div className="w-full h-16 bg-white px-4 py-6 flex border-b-2 gap-5 items-center justify-center ">
       <img
         src={PinLogo}
         alt="Pinterest Logo"
@@ -12,7 +13,7 @@ function Nav() {
       />
 
       <button className="font-semibold transition-all hover:bg-red-600 rounded-full hover:text-white px-4 py-2">
-        Home
+        <Link to={"/"}>Home</Link>
       </button>
       <button className="font-semibold transition-all hover:bg-red-600 rounded-full hover:text-white px-4 py-2">
         Create
