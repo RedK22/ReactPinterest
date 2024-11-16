@@ -1,4 +1,3 @@
-import Nav from "./Nav";
 import {useAuth} from "../AuthContext";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
@@ -14,28 +13,15 @@ function ProfilePage() {
   }, [user, loading, navigate]);
 
   if (loading) {
-    return (
-      <div>
-        <Nav />
-        Loading....
-      </div>
-    );
+    return <div>Loading....</div>;
   }
 
   if (!user) {
-    // This ensures we are not rendering the Profile Page if no user is available
-    return (
-      <div>
-        <Nav />
-        You need to sign in to access your profile.
-      </div>
-    );
+    return <div>You need to sign in to access your profile.</div>;
   }
 
   return (
     <>
-      <Nav />
-
       <div>Welcome to Profile Page {user.email}</div>
     </>
   );

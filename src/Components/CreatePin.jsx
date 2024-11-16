@@ -1,9 +1,9 @@
-import Nav from "./Nav";
 import {useAuth} from "../AuthContext";
 import supabase from "../utils/supabase";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {FaCircleArrowUp} from "react-icons/fa6";
+import {motion} from "framer-motion";
 
 function CreatePin() {
   const navigate = useNavigate();
@@ -22,18 +22,26 @@ function CreatePin() {
   }, [user, loading, navigate]);
 
   if (loading) {
-    return (
-      <div>
-        <Nav />
-        Loading....
-      </div>
-    );
+    return <div>Loading....</div>;
   }
 
   return (
     <>
-      <Nav />
-      <div className="px-4 ">
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        exit={{
+          opacity: 0,
+        }}
+        transition={{
+          duration: 0.3,
+        }}
+        className="px-4 "
+      >
         <h1 className="text-2xl py-4 font-semibold border-b-[1px]">
           Create Pin
         </h1>
@@ -63,6 +71,7 @@ function CreatePin() {
                   className="border-[1px] rounded-lg px-4 py-2 text-sm border-gray-600 outline-none"
                 />
               </div>
+              {/*  */}
               <div className="flex flex-col w-3/5 mt-5">
                 <label className="font-semibold text-sm mb-1">
                   Description
@@ -73,7 +82,8 @@ function CreatePin() {
                   className="border-[1px] rounded-lg px-4 pt-2 pb-24 resize-none text-sm border-gray-600 outline-none"
                 />
               </div>
-              <div className="flex flex-col w-3/5">
+              {/*  */}
+              <div className="flex flex-col w-3/5 mt-5">
                 <label className="font-semibold text-sm mb-1">Link</label>
                 <input
                   type="text"
@@ -84,7 +94,7 @@ function CreatePin() {
             </div>
           </div>
         </form>
-      </div>
+      </motion.div>
     </>
   );
 }

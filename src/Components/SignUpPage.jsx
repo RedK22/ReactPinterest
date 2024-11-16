@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import SignUpImage from "/SignUp.jpg";
 import PinLogo from "/pin-logo.png";
 import {CiWarning} from "react-icons/ci";
-import Nav from "./Nav";
+
 import {Link, useNavigate} from "react-router-dom";
 import {useAuth} from "../AuthContext";
 
@@ -44,7 +44,6 @@ function SignUpPage() {
 
   return (
     <div className="flex flex-col bg-gray-100 h-screen">
-      <Nav />
       <div className="flex flex-1 overflow-hidden">
         {/* Image */}
         <div className="w-1/3 relative">

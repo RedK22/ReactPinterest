@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import Nav from "./Nav";
+
 import SignInImage from "/SignIn.jpg";
 import PinLogo from "/pin-logo.png";
 import {CiWarning} from "react-icons/ci";
@@ -40,7 +40,6 @@ export default function SignInPage() {
 
   return (
     <div className="flex flex-col h-screen">
-      <Nav />
       <div className="flex flex-1 overflow-hidden">
         <div className="w-1/3 relative">
           <img

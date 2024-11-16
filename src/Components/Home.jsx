@@ -1,8 +1,9 @@
 import React from "react";
-import Nav from "./Nav";
+
 import {Link} from "react-router-dom";
 import {useAuth} from "../AuthContext";
 import supabase from "../utils/supabase";
+import {motion} from "framer-motion";
 
 function Home() {
   const {user, loading} = useAuth();
@@ -11,8 +12,20 @@ function Home() {
   }
 
   return (
-    <div>
-      <Nav />
+    <motion.div
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0,
+      }}
+      transition={{
+        duration: 0.3,
+      }}
+    >
       {user ? (
         <div>
           Welcome {user.email}
@@ -28,7 +41,7 @@ function Home() {
       <Link to={"/signin"}>Sign In</Link>
       <br />
       <Link to={"/signup"}>Sign up</Link>
-    </div>
+    </motion.div>
   );
 }
 
