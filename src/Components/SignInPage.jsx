@@ -1,14 +1,24 @@
-import React, {useState} from "react";
+import {useEffect, useState} from "react";
 import Nav from "./Nav";
 import SignInImage from "/SignIn.jpg";
 import PinLogo from "/pin-logo.png";
 import {CiWarning} from "react-icons/ci";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import supabase from "../utils/supabase";
+import {useAuth} from "../AuthContext";
 
-export default function SignInPage({supabase}) {
+export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const {user} = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   async function SignInUser() {
     const {user, error: signinError} = await supabase.auth.signInWithPassword({
@@ -20,6 +30,8 @@ export default function SignInPage({supabase}) {
       setError(signinError.message);
     } else {
       console.log("User signed in!");
+      navigate("/");
+
       setEmail("");
       setPassword("");
       setError("");

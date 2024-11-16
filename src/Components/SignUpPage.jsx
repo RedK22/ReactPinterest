@@ -1,14 +1,26 @@
-import React, {useState} from "react";
+import {useState, useEffect} from "react";
 import SignUpImage from "/SignUp.jpg";
 import PinLogo from "/pin-logo.png";
 import {CiWarning} from "react-icons/ci";
 import Nav from "./Nav";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useAuth} from "../AuthContext";
 
-function SignUpPage({supabase}) {
+import supabase from "../utils/supabase";
+
+function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const {user} = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   //! Sign Up User
   async function SignUpUser() {
@@ -21,6 +33,7 @@ function SignUpPage({supabase}) {
       setError(signupError.message);
     } else {
       console.log("User signed up:");
+      navigate("/");
       setEmail("");
       setPassword("");
       setError("");
