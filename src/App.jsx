@@ -4,7 +4,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import {AuthProvider} from "./AuthContext.jsx"; // Import the AuthProvider
+import {AuthProvider} from "./AuthContext.jsx";
 import Home from "./Components/Home";
 import SignUpPage from "./Components/SignUpPage";
 import SignInPage from "./Components/SignInPage";
