@@ -182,12 +182,21 @@ function CreatePin() {
                   className="border-[1px] rounded-lg px-4 py-2 text-sm border-gray-600 outline-none"
                 />
               </div>
-              <button
-                onClick={handleCreate}
-                className="mt-5 px-4 py-2 text-md font-semibold bg-red-600 hover:bg-red-700 transition-all text-white rounded-md"
-              >
-                Add Pin
-              </button>
+              <div className="flex gap-4">
+                <button
+                  onClick={handleCreate}
+                  className="mt-5 px-4 py-2 text-md font-semibold bg-red-600 hover:bg-red-700 transition-all text-white rounded-md"
+                >
+                  Add Pin
+                </button>
+
+                <button
+                  onClick={() => navigate("/")}
+                  className="mt-5 px-4 py-2 text-md font-semibold bg-gray-600 hover:bg-gray-700 transition-all text-white rounded-md"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </form>
