@@ -9,62 +9,78 @@ function CreatePin() {
   const navigate = useNavigate();
   const {user, loading} = useAuth();
 
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null); // State for image preview
   const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
 
-  // !Upload image in the bucket
+  // Handle Image Upload
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${Date.now()}.${fileExt}`;
+    setImageFile(file);
 
-    const {data, error} = await supabase.storage
-      .from("images")
-      .upload(fileName, file);
-
-    if (error) {
-      console.error("Error uploading image:", error);
-    }
-
-    // Get the public URL of the uploaded image
-    const imgData = await supabase.storage
-      .from("images")
-      .getPublicUrl(data.path);
-
-    // console.log("Uploaded image URL:", imgData.data.publicUrl);
-    setImageUrl(imgData.data.publicUrl);
+    // Create a preview of the selected image
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result); // Set the preview URL
+    };
+    reader.readAsDataURL(file);
   };
 
-  // !Create the pin entry
+  // Create the pin entry
   async function handleCreate(e) {
     e.preventDefault();
 
-    if (!imageUrl) {
+    if (!imageFile) {
       alert("Please upload an image for the pin");
       return;
     }
 
-    // console.log("Creating pin with image URL:", imageUrl);
+    // Upload the pin image here
+    const fileExt = imageFile.name.split(".").pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+
+    const {data, error} = await supabase.storage
+      .from("images")
+      .upload(fileName, imageFile);
+
+    if (error) {
+      console.error("Error uploading image:", error);
+      return; // Return early in case of an error
+    }
+
+    const imgData = await supabase.storage
+      .from("images")
+      .getPublicUrl(data.path);
+
+    if (!imgData || !imgData.data.publicUrl) {
+      console.error("Failed to get image URL.");
+      return;
+    }
+
     const newPin = {
       title,
       description,
       link,
-      imageUrl,
+      imageUrl: imgData.data.publicUrl,
       user_id: user.id,
     };
 
-    const {data, error} = await supabase.from("pins").insert([newPin]).select();
+    const {data: pinData, error: pinError} = await supabase
+      .from("pins")
+      .insert([newPin])
+      .select();
 
-    if (error) {
-      console.error("Error inserting pin:", error);
+    if (pinError) {
+      console.error("Error inserting pin:", pinError);
       return;
     }
 
-    // console.log("Pin created:", data);
+    navigate("/");
   }
 
   useEffect(() => {
@@ -107,19 +123,31 @@ function CreatePin() {
           <div className="w-full min-h-96 flex gap-4 mt-10">
             {/* Pin Image */}
             <div className="w-1/3">
-              <label className="flex h-full cursor-pointer justify-center items-center rounded-md border-2 hover:border-black transition-all">
-                <input
-                  type="file"
-                  accept="image/jpeg, image/png"
-                  className="bg-red-500 hidden w-full h-full rounded-md"
-                  onChange={handleImageUpload}
-                />
-                <div className="flex items-center justify-center flex-col ">
-                  <FaCircleArrowUp size={50} />
-                  <p className="mt-2">Upload images from device</p>
+              {/* Display the file input if no image is selected, else show the image preview */}
+              {!imagePreview ? (
+                <label className="flex h-full cursor-pointer justify-center items-center rounded-md border-2 hover:border-black transition-all">
+                  <input
+                    type="file"
+                    accept="image/jpeg, image/png"
+                    className="bg-red-500 hidden w-full h-full rounded-md"
+                    onChange={handleImageUpload}
+                  />
+                  <div className="flex items-center justify-center flex-col ">
+                    <FaCircleArrowUp size={50} />
+                    <p className="mt-2">Upload images from device</p>
+                  </div>
+                </label>
+              ) : (
+                <div className="flex justify-center items-center w-full h-full">
+                  <img
+                    src={imagePreview}
+                    alt="Image Preview"
+                    className="object-cover w-[75%] h-full rounded-md"
+                  />
                 </div>
-              </label>
+              )}
             </div>
+
             {/* Pin Details */}
             <div className="w-2/3">
               <div className="flex flex-col w-3/5">
