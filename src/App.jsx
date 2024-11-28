@@ -12,6 +12,7 @@ import CreatePin from "./Components/CreatePin.jsx";
 import ProfilePage from "./Components/ProfilePage.jsx";
 import Nav from "./Components/Nav.jsx";
 import {AnimatePresence, motion} from "framer-motion";
+import PostPage from "./Components/PostPage.jsx";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AnimatedRoutes() {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/create" element={<CreatePin />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/post/:id" element={<PostPage />} />
       </Routes>
     </AnimatePresence>
   );

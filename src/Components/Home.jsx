@@ -19,7 +19,7 @@ function Home() {
         console.error("Error fetching pins:", error);
         return;
       }
-      console.log(data);
+      // console.log(data);
       setPins(data);
     };
 
@@ -59,17 +59,16 @@ function Home() {
         {/* Pins from DB */}
         {pins.map((pin) => (
           <div key={pin.id} className="w-full mb-2 break-inside-avoid">
-            <img
-              src={pin.imageUrl} // Use imageUrl from the pin
-              alt="Pin Image"
-              className="h-full rounded-lg"
-            />
+            <Link to={`/post/${pin.id}`} className="hover:cursor-pointer">
+              <img
+                src={pin.imageUrl} // Use imageUrl from the pin
+                alt="Pin Image"
+                className="h-full rounded-lg"
+              />
+            </Link>
             <p className="text-sm font-semibold">{pin.title}</p>
-            <p className="text-sm font">{pin.userId}</p>
-            <p className="text-sm">{pin.description}</p>
-            <a href={pin.link} target="_blank" rel="noopener noreferrer">
-              Visit Link
-            </a>
+            <p className="text-sm font">{pin.user_id}</p>
+            {/* <p className="text-sm">{pin.description}</p> */}
           </div>
         ))}
       </div>

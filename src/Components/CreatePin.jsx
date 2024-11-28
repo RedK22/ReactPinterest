@@ -23,10 +23,10 @@ function CreatePin() {
 
     setImageFile(file);
 
-    // Create a preview of the selected image
+    // Creating a preview of the selected image
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreview(reader.result); // Set the preview URL
+      setImagePreview(reader.result);
     };
     reader.readAsDataURL(file);
   };

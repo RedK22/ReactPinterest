@@ -29,17 +29,12 @@ function SignUpPage() {
       password,
     });
     if (signupError) {
-      console.error("Sign up error:", signupError.message);
+      console.error("Sign up error:", signupError);
       setError(signupError.message);
-    } else {
-      console.log("User signed up:");
-      navigate("/");
-      setEmail("");
-      setPassword("");
-      setError("");
+      return;
     }
 
-    return signupError;
+    navigate("/");
   }
 
   return (
